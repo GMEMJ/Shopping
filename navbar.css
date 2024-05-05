@@ -3,8 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    background-color: #2e2e64;
+    background-color: #efece5;
 }
 
 .navbar{
@@ -41,6 +40,11 @@ body {
   visibility: visible;
 }
 
+
+/* 搜尋列 */
+.formSet{
+  margin: 20px;
+}
 
 @media screen and (max-width: 1000px) {
   /* 測攔 */
