@@ -3,24 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物網站</title>
 
   <!-- Bootstrap CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <title>Document</title>
+  <link rel="stylesheet" href="navbar.css">
+
 </head>
 <body>
-  <h1>Hello World!</h1>
-  <button type="button" class="btn btn-primary">Primary</button>
-  <button type="button" class="btn btn-secondary">Secondary</button>
-  <button type="button" class="btn btn-success">Success</button>
-  <button type="button" class="btn btn-danger">Danger</button>
-  <button type="button" class="btn btn-warning">Warning</button>
-  <button type="button" class="btn btn-info">Info</button>
-  <button type="button" class="btn btn-light">Light</button>
-  <button type="button" class="btn btn-dark">Dark</button>
-  
-  <button type="button" class="btn btn-link">Link</button>
+
+  <!-- 導覽列(Navbar) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <!-- LOGO -->
+      <a class="navbar-brand" href="#">
+        <div class="d-flex align-items-center">
+          <img src="/images/LOGO.png" alt="LOGO" width="50" height="50" class="">
+          <span class="d-inline-block fs-2 ms-2">購物網站</span>
+        </div>
+      </a>
+      
+      <!-- Toggle-Button(切換選單按鈕) -->
+      <button class="navbar-toggler shadow-none " 
+        type="button" 
+        data-bs-toggle="offcanvas" 
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- 測攔項目 -->
+      <div class="sidebar offcanvas offcanvas-start" 
+        tabindex="-1" 
+        id="offcanvasNavbar" 
+        aria-labelledby="offcanvasNavbarLabel">
+        <!-- 測攔標頭(header) -->
+        <div class="offcanvas-header text-white border-bottom">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">購物網站</h5>
+          <button type="button" 
+          class="btn-close btn-close-white" 
+          data-bs-dismiss="offcanvas" 
+          aria-label="Close"></button>
+        </div>
+
+        <!-- 測攔內容(body) -->
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center 
+          align-items-center fs-4 flex-grow-1 ">
+            <li class="nav-item mx-2 ">
+              <a class="nav-link active" aria-current="page" href="#">首頁</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="#about">各種商品</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link" href="#about">最新資訊</a>
+            </li>
+            <li class="nav-item mxs-2">
+              <a class="nav-link" href="#about">關於我們</a>
+            </li>
+          </ul>
+          <!-- 登入(login) / 註冊(register) -->
+          <div class="d-flex justify-content-center align-items-center gap-3 m-3 ">
+            <a href="#" class="btn btn-outline-light fs-5">登入</a>
+            <a href="#" class="btn btn-light fs-5">註冊</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
 
   <!-- Bootstrap JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
