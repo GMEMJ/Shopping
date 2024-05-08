@@ -40,10 +40,27 @@ body {
   visibility: visible;
 }
 
-
 /* 搜尋列 */
 .formSet{
   margin: 20px;
+}
+
+/* 今日商品幻燈片 */
+.ItemImage{
+  margin:50px 10%;
+}
+
+.TodayItemImage{
+  margin:0 2% 0 0;
+  width: 50%;
+}
+
+.ImgItem{
+
+}
+
+.MarkerdownItemImage{
+  width: 50%;
 }
 
 @media screen and (max-width: 1000px) {
