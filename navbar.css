@@ -85,73 +85,165 @@ body {
 
 .ItemImage{
   margin:50px 10%;
+  height: 100%;
 }
 /* 今日商品幻燈片 */
 .TodayItemImage{
-  margin:0 2% 0 0;
+  margin-right:2%;
   width: 50%;
+  height: 100%;
 }
-.carousel-inner{
+.TodayItemImage .carousel-inner{
   border-radius: 30px;
+  height: 100%;
+}
+
+/* 降價跟熱銷商品容器 */
+.markdownAndSellWell{
+  width:50%;
 }
 
 /* 降價商品 */
 .markdownItemImage{
-  position: relative;
+  text-align: center;
   background-color: rgb(42, 46, 46);
-  width: 50%;
-  height: 60%;
-  padding: 0 50px;
+  width: 100%;
+  padding: 10px 60px;
   border-radius: 30px;
 }
 
-/* 左箭頭 */
+/* 降價商品左箭頭 */
 .markdownItemImage .carousel-control-prev{
-  position: absolute;
-  background-color: #ff6d0b;
-  border-radius: 50%;
-  width: 6%;
-  height: 20%;
-  top: 60%;
-  left: -4%;
+  left: -15%;
 }
-/* 右箭頭 */
+/* 降價商品右箭頭 */
 .markdownItemImage .carousel-control-next{
-  position: absolute;
-  background-color: #ff6d0b;
+  right: -15%;
+}
+
+/* 熱銷商品 */
+.sellWellItemImage {
+  text-align: center;
+  background-color: rgb(63, 161, 163);
+  width: 100%;
+  padding: 10px 60px;
+  margin-top:20px;
+  border-radius: 30px;
+}
+
+/* 熱銷商品左箭頭 */
+.sellWellItemImage .carousel-control-prev {
+  left: -15%;
+}
+
+/* 熱銷商品右箭頭 */
+.sellWellItemImage .carousel-control-next {
+  right: -15%;
+}
+
+/* 箭頭圖標(左) */
+.carousel-control-prev-icon{
+  background-color: #000000;
+  padding: 20px;
   border-radius: 50%;
-  width: 6%;
-  height: 20%;
-  top: 60%;
-  right: -4%;
+}
+/* 箭頭圖標(右) */
+.carousel-control-next-icon{
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 50%;
 }
 
-/* 降價商品標頭 */
-.markdownHeader{
-  padding:10px 30px 0;
+/* 主題商品標頭 */
+.commodityHeader{
+  padding:20px 20px 0 20px;
 }
 
-/* 降價商品標頭文字 */
-.markdownHeader p{
+/* 主題商品標頭文字 */
+.commodityHeader p{
   font-size: 50px;
   font-weight: 1000;
   color: #fff;
-  margin: 30px 0;
 }
 
-/* 降價商品內容容器 */
-.markdownItem-box{
-  padding:0 30px ;
+/* 降價商品內容 */
+.item-box{
+  background-color: #efece5;
+  border-radius:20px;
 }
 
-.priceReduction-text{
+/* 商品圖片 */
+.item-img{
+  width: 100%;
+  border-radius: 20px;
+}
+/* 商品圖片 */
+.item-img img{
+  width: 100%;
+  border-radius:20px 20px 0 0 ;
+}
+
+/* 商品文字 */
+.item-text{
   text-align: center;
-  opacity: 0.1;
+}
+/* 商品文字 */
+.item-text p{
+  font-size: 15px;
+  color: black;
 }
 
-.priceReduction-text p{
-  color: #f5f5f5;
-  opacity: 1;
+/* ========================================= */
+/* 商品喜愛區設定 */
+
+.favoriteAndEveFavorite{
+  margin: 50px 10%;
+}
+
+/* 個人喜愛商品 */
+.favoriteItemImage {
+  text-align: center;
+  background-color: rgb(63, 161, 163);
+  width: 100%;
+  padding: 10px 60px;
+  margin-top: 20px;
+  border-radius: 30px;
+}
+
+/* 個人喜愛商品左箭頭 */
+.favoriteItemImage .carousel-control-prev {
+  left: -10%;
+}
+
+/* 個人喜愛商品右箭頭 */
+.favoriteItemImage .carousel-control-next {
+  right: -10%;
+}
+
+/* 個人喜愛商品 */
+.EveryoneFavorite_ItemImage {
+  text-align: center;
+  background-color: rgb(63, 161, 163);
+  width: 100%;
+  padding: 10px 60px;
+  margin-top: 20px;
+  border-radius: 30px;
+}
+
+/* 個人喜愛商品左箭頭 */
+.EveryoneFavorite_ItemImage .carousel-control-prev {
+  left: -10%;
+}
+
+/* 個人喜愛商品右箭頭 */
+.EveryoneFavorite_ItemImage .carousel-control-next {
+  right: -10%;
+}
+
+@media screen and (max-width: 600px) {
+  .EveryoneFavoriteItem .commodityHeader{
+    font-size: 5px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -167,12 +259,12 @@ body {
 
   /* 今日商品幻燈片 */
   .TodayItemImage{
-    margin:0 2% 0 0;
+    margin-bottom:10px;
     width: 100%;
   }
 
-  /* 降價商品 */
-  .markdownItemImage{
+  /* 降價跟熱銷商品容器 */
+  .markdownAndSellWell{
     width: 100%;
   }
 
@@ -198,5 +290,11 @@ body {
     font-weight: 1000;
     text-align: center;
     padding: 30px;
+  }
+
+  .commodityHeader p{
+    font-size: 25px;
+    font-weight: 1000;
+    color: #fff;
   }
 }
