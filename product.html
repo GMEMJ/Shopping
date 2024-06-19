@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物網站</title>
+
+  <!-- Vue3引入 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- Bootstrap CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/CSS/sidebar.css">
+  </head>
+<body>
+  <div id="app">
+    <!-- 導覽列(Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <div class="container">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="#">
+          <div class="d-flex align-items-center">
+            <img src="./images/LOGO.png" alt="LOGO" width="50" height="50" class="">
+            <span class="d-inline-block fs-2 ms-2">購物網站</span>
+          </div>
+        </a>
+    
+        <!-- Toggle-Button(切換選單按鈕) -->
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- 測攔項目 -->
+        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel">
+    
+          <!-- 測攔標頭(header) -->
+          <div class="offcanvas-header text-white border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">購物網站</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+    
+          <!-- 測攔內容(body) -->
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-center align-items-center fs-4 flex-grow-1">
+              <li class="nav-item mx-2" v-for="link in navLinks" :key="link.text">
+                <a class="nav-link" :class="{ active: link.active }" :href="link.href">{{ link.text }}</a>
+              </li>
+            </ul>
+            <!-- 登入(login) / 註冊(register) -->
+            <div class="d-flex justify-content-center align-items-center gap-3 m-3 ">
+              <a href="./Login.html" class="btn btn-outline-light fs-5">登入</a>
+              <a href="./Register.html" class="btn btn-light fs-5">註冊</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- 商品詳細內容區塊 -->
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col-12 col-md-6">
+          <img src="https://picsum.photos/650/550?random=1" alt="商品圖片" class="img-fluid">
+        </div>
+        <div class="col-12 col-md-6">
+          <h1 class="fs-1">{{ product.name }}</h1>
+          <p class="fs-4">{{ product.price }}</p>
+          <p class="fs-5">{{ product.shipping }}</p>
+          <p class="fs-5">{{ product.category }}</p>
+          <p class="fs-5">{{ product.quantity }}</p>
+          
+          <button class="btn btn-primary">加入購物車</button>
+        </div>
+      </div>
+      <!-- 商品規格跟商品描述 -->
+      <div class="col-12 mb-3">
+        <div class="detailed bg-dark rounded-2 text-white p-3">
+          <!-- 商品規格 -->
+          <div class="standard">
+            <p class="fs-4 mb-2 bg-light text-dark p-2">商品規格</p>
+            <p class="fs-5 mb-2">分類：{{ product.specs.category }}</p>
+            <p class="fs-5 mb-2">品牌：{{ product.specs.brand }}</p>
+            <p class="fs-5 mb-2">產地：{{ product.specs.origin }}</p>
+            <p class="fs-5 mb-2">商品數量：{{ product.specs.stock }}</p>
+            <p class="fs-5 mb-2">出貨地：{{ product.specs.shipFrom }}</p>
+          </div>
+            <!-- 商品描述 -->
+          <div class="description">
+            <p class="fs-4 mb-2 bg-light text-dark p-2">商品描述</p>
+            <p class="fs-5 mb-2">商品特色：{{ product.description.features }}</p>
+            <p class="fs-5 mb-2">商品規格：{{ product.description.specifications }}</p>
+            <p class="fs-5 mb-2">品名：{{ product.description.name }}</p>
+            <p class="fs-5 mb-2">重量：{{ product.description.weight }}</p>
+            <p class="fs-5 mb-2">原產地：{{ product.description.origin }}</p>
+            <p class="fs-5 mb-2">保存期限：{{ product.description.shelfLife }}</p>
+            <p class="fs-5 mb-2">保存方式：{{ product.description.storage }}</p>
+            <p class="fs-5 mb-2">退貨須知：{{ product.description.returnPolicy }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- 商品評價 -->
+      <div class="col-12">
+        <div class="appraise bg-dark rounded-2 text-white p-3">
+          <p class="fs-4 mb-2 p-2">商品評價</p>
+          <div class="p-2 bg-light d-flex mb-3">
+            <button type="button" class="btn btn-outline-primary me-2" @click="filterReviews('all')">全部</button>
+            <button type="button" class="btn btn-outline-danger me-2" @click="filterReviews(5)">五星</button>
+            <button type="button" class="btn btn-outline-warning me-2" @click="filterReviews(4)">四星</button>
+            <button type="button" class="btn btn-outline-success me-2" @click="filterReviews(3)">三星</button>
+            <button type="button" class="btn btn-outline-dark me-2" @click="filterReviews(2)">二星</button>
+            <button type="button" class="btn btn-outline-secondary me-2" @click="filterReviews(1)">一星</button>
+          </div>
+          <div v-for="review in filteredReviews" :key="review.id" class="appraise-content d-flex bg-light mb-3">
+            <div class="appraise-user m-2">
+              <img :src="review.userImage" alt="user" class="img-fluid rounded-circle">
+            </div>
+            <div class="appraise-star-content text-dark mt">
+              <span class="fs-5">{{ review.username }}</span>
+              <p class="fs-5">評價星數: {{ review.rating }}</p>
+              <p class="fs-5">評價內容: {{ review.content }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          // 導覽列(Navbar)
+          navLinks: [
+            { text: '首頁', href: './index.html', active: false },
+            { text: '各種商品', href: './commodity.html', active: true },
+            { text: '關於我們', href: '#', active: false },
+          ],
+          // 商品資料
+          product: {
+            image: 'https://picsum.photos/650/550?random=1',
+            name: '商品名稱',
+            price: '商品價格',
+            shipping: '運送方式',
+            category: '品項',
+            quantity: '數量',
+            specs: {
+              category: '分類內容',
+              brand: '品牌內容',
+              origin: '產地內容',
+              stock: '商品數量內容',
+              shipFrom: '出貨地內容',
+            },
+            description: {
+              features: '商品特色內容',
+              specifications: '商品規格內容',
+              name: '品名內容',
+              weight: '重量內容',
+              origin: '原產地內容',
+              shelfLife: '保存期限內容',
+              storage: '保存方式內容',
+              returnPolicy: '退貨須知內容',
+            }
+          },
+          // 評價資料
+          reviews: [
+            { id: 1, userImage: 'https://picsum.photos/50/50?random=1', username: '使用者1', rating: 5, content: '評價內容1' },
+            { id: 2, userImage: 'https://picsum.photos/50/50?random=2', username: '使用者2', rating: 4, content: '評價內容2' },
+            { id: 3, userImage: 'https://picsum.photos/50/50?random=3', username: '使用者3', rating: 3, content: '評價內容3' },
+            { id: 4, userImage: 'https://picsum.photos/50/50?random=4', username: '使用者4', rating: 2, content: '評價內容4' },
+            { id: 5, userImage: 'https://picsum.photos/50/50?random=5', username: '使用者5', rating: 1, content: '評價內容5' },
+          ],
+          filteredReviews: []
+        }
+      },
+      methods: {
+        // 評價分類
+        filterReviews(rating) {
+          if (rating === 'all') {
+            this.filteredReviews = this.reviews;
+          } else {
+            this.filteredReviews = this.reviews.filter(review => review.rating === rating);
+          }
+        }
+      },
+      mounted() {
+        // 初始先顯示全部評價ㄖ
+        this.filteredReviews = this.reviews;
+      }
+    }).mount('#app')
+  </script>
+  <!-- Bootstrap JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+*{
+  margin: 0;
+  padding:0;
+}
+
+/* 登入、註冊CSS設定 */
+.user{
+  padding:20px 100px;
+  background-color: antiquewhite;
+}
+
+.userContent{
+  padding:20px;
+}
+
+.userForm{
+  padding:20px;
+  background-color: rgb(255, 255, 255);
+}
+
+
+
+@media screen and (max-width: 1200px) {
+
+  /* 測攔 */
+  .sidebar {
+    background-color: rgba(43, 45, 45, 0.15);
+    /* 背景模糊 */
+    backdrop-filter: blur(100px);
+  }
+
+  .nav-link::before {
+    display: none;
+  }
+}

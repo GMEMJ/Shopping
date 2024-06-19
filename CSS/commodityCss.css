@@ -1,0 +1,131 @@
+/* 導覽列的樣式 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #efece5;
+}
+
+.navbar {
+  padding: 0.5rem;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.nav-link {
+  color: rgb(255, 255, 255);
+  font-weight: 900;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #ff6d0b;
+  visibility: hidden;
+  transition: 0.5s ease-in-out;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: 100%;
+  visibility: visible;
+}
+
+/* 搜尋列 */
+.formSet {
+  margin: 20px;
+}
+
+/* 箭頭圖標(左) */
+.carousel-control-prev-icon {
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 50%;
+}
+
+/* 箭頭圖標(右) */
+.carousel-control-next-icon {
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 50%;
+}
+
+/* 商品類別列表 */
+.PC{
+  margin-top: 50px;
+  padding: 20px;
+  background-color: rgb(12, 9, 5);
+  width: 100%;
+  border: 10px solid rgb(221, 154, 66);
+  border-radius: 30px;
+  height: 600px;
+}
+
+.PC .card-title{
+  color: white;
+  font-size: 30px;
+  font-weight: 1000;
+}
+
+hr {
+  height: 5px;
+  background-color: #fd8080;
+  border: none;
+}
+
+.PC .card-text{
+  margin-top: 20px;
+  color: white;
+  font-size: 25px;
+  font-weight: 1000;
+}
+
+/* 各種商品 */
+.commodity {
+  margin-top: 50px;
+}
+
+.commodity-sift{
+  background-color: rgb(205, 205, 205);
+  padding: 20px;
+  border-radius: 15px;
+
+}
+
+.commodity-sift .sift-title{
+  font-size: 25px;
+  font-weight: 1000;
+  color: #000;
+  margin: 0;
+}
+
+/* 商品類別 */
+.custom-card-link {
+  text-decoration: none; /* 刪除連結的底線 */
+  color: inherit; /* 使用預設的文字顏色 */
+}
+
+@media screen and (max-width: 1200px) {
+
+  /* 測攔 */
+  .sidebar {
+    background-color: rgba(43, 45, 45, 0.15);
+    /* 背景模糊 */
+    backdrop-filter: blur(100px);
+  }
+
+  .nav-link::before {
+    display: none;
+  }
+}

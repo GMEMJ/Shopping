@@ -4,424 +4,255 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>購物網站</title>
-
+  <!-- Vue3引入 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <link rel="website icon" href="./images/LOGO.png">
 
   <!-- Bootstrap CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="CSS/IndexCss.css">
 
 </head>
 <body>
-
-  <!-- 導覽列(Navbar) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <!-- LOGO -->
-      <a class="navbar-brand" href="#">
-        <div class="d-flex align-items-center">
-          <img src="./images/LOGO.png" alt="LOGO" width="50" height="50" class="">
-          <span class="d-inline-block fs-2 ms-2">購物網站</span>
+  <div id="app">
+    <!-- 導覽列(Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="#">
+          <div class="d-flex align-items-center">
+            <img src="./images/LOGO.png" alt="LOGO" width="50" height="50" class="">
+            <span class="d-inline-block fs-2 ms-2">購物網站</span>
+          </div>
+        </a>
+    
+        <!-- Toggle-Button(切換選單按鈕) -->
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- 測攔項目 -->
+        <div class="sidebar offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel">
+    
+          <!-- 測攔標頭(header) -->
+          <div class="offcanvas-header text-white border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">購物網站</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+    
+          <!-- 測攔內容(body) -->
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-center align-items-center fs-4 flex-grow-1">
+              <li class="nav-item mx-2" v-for="link in navLinks" :key="link.text">
+                <a class="nav-link" :class="{ active: link.active }" :href="link.href">{{ link.text }}</a>
+              </li>
+            </ul>
+            <!-- 登入(login) / 註冊(register) -->
+            <div class="d-flex justify-content-center align-items-center gap-3 m-3 ">
+              <a href="./Login.html" class="btn btn-outline-light fs-5">登入</a>
+              <a href="./Register.html" class="btn btn-light fs-5">註冊</a>
+            </div>
+          </div>
         </div>
-      </a>
-      
-      <!-- Toggle-Button(切換選單按鈕) -->
-      <button class="navbar-toggler shadow-none " 
-        type="button" 
-        data-bs-toggle="offcanvas" 
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      </div>
+    </nav>
+    
+    <!-- 搜尋列 -->
+    <div class="formSet">
+      <div class="container d-flex justify-content-center ">
+        <form style="width: 700px;" class="input-group">
+          <input class="form-control me-2" type="search" placeholder="搜尋你想要的物品~" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">搜尋</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 商品活動幻燈片 -->
+    <div id="snacks" class="carousel slide" data-bs-ride="carousel">
+
+      <!-- 圖片下方圖示 -->
+      <div class="carousel-indicators">
+        <button v-for="(item, index) in carouselItems" :key="index" type="button" data-bs-target="#snacks"
+          :data-bs-slide-to="index" :class="{ active: index === 0 }" aria-current="index === 0"
+          :aria-label="'Slide ' + (index + 1)"></button>
+      </div>
+
+      <!-- 商品內容 -->
+      <div class="carousel-inner">
+        <div class="carousel-item" :class="{ active: index === 0 }" v-for="(item, index) in carouselItems" :key="index">
+          <img :src="item.image" class="d-block w-100" :alt="'Slide ' + (index + 1)">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ item.title }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- 箭頭圖示 -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#snacks" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
       </button>
-
-      <!-- 測攔項目 -->
-      <div class="sidebar offcanvas offcanvas-start" 
-        tabindex="-1" 
-        id="offcanvasNavbar" 
-        aria-labelledby="offcanvasNavbarLabel">
-        <!-- 測攔標頭(header) -->
-        <div class="offcanvas-header text-white border-bottom">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">購物網站</h5>
-          <button type="button" 
-          class="btn-close btn-close-white" 
-          data-bs-dismiss="offcanvas" 
-          aria-label="Close"></button>
-        </div>
-
-        <!-- 測攔內容(body) -->
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-center 
-          align-items-center fs-4 flex-grow-1 ">
-            <li class="nav-item mx-2 ">
-              <a class="nav-link active" aria-current="page" href="#">首頁</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#about">各種商品</a>
-            </li>
-            <li class="nav-item mx-2">
-              <a class="nav-link" href="#about">最新資訊</a>
-            </li>
-            <li class="nav-item mxs-2">
-              <a class="nav-link" href="#about">關於我們</a>
-            </li>
-          </ul>
-          <!-- 登入(login) / 註冊(register) -->
-          <div class="d-flex justify-content-center align-items-center gap-3 m-3 ">
-            <a href="#" class="btn btn-outline-light fs-5">登入</a>
-            <a href="#" class="btn btn-light fs-5">註冊</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-  
-  <!-- 搜尋列 -->
-  <div class="formSet">
-    <div class="container d-flex justify-content-center ">
-      <form style="width: 700px;" class="input-group">
-        <input class="form-control me-2" type="search" placeholder="搜尋你想要的物品~" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">搜尋</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 商品活動幻燈片 -->
-  <div id="snacks" class="carousel slide" data-bs-ride="carousel">
-
-    <!-- 圖片下方圖示 -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#snacks" data-bs-slide-to="0" class="active"
-        aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#snacks" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#snacks" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button class="carousel-control-next" type="button" data-bs-target="#snacks" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
 
-    <!-- 商品內容 -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://picsum.photos/300/100" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>餅乾類</h5>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://picsum.photos/300/100" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>糖果類</h5>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://picsum.photos/300/100" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>飲料類</h5>
-        </div>
-      </div>
-    </div>
-
-    <!-- 箭頭圖示 -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#snacks" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#snacks" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <!-- 商品類別 -->
-  <div class="category">
-    <!-- 標題 -->
-    <h2 class="cateTitle">商品種類</h2>
-    <!-- 有哪些種類 -->
-    <div class="categoryItem">
-      <div class="row">
-        <div class="col-12 col-md-3">
-          <div class="item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <p>餅乾類</p>
-          </div>
-        </div>
-        <div class="col-12 col-md-3">
-          <div class="item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <p>糖果類</p>
-          </div>
-        </div>
-        <div class="col-12 col-md-3">
-          <div class="item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <p>飲料類</p>
-          </div>
-        </div>
-        <div class="col-12 col-md-3">
-          <div class="item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <p>其他</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- 各種商品幻燈片 -->
-  <div class="ItemImage d-flex flex-column flex-xl-row">
-    <!-- 今日商品幻燈片 -->
-    <div class="TodayItemImage">
-      <div id="TodayItem" class="carousel slide" data-bs-ride="carousel">
-
-        <!-- 圖片下方圖示 -->
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#TodayItem" data-bs-slide-to="0" class="active" aria-current="true"
-            aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#TodayItem" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#TodayItem" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-      
-        <!-- 商品內容 -->
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>餅乾類</h5>
-              <p>Some representative placeholder content for the first slide.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>糖果類</h5>
-              <p>Some representative placeholder content for the second slide.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="https://picsum.photos/300/200" class="ImgItem d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>飲料類</h5>
-              <p>Some representative placeholder content for the third slide.</p>
+    <!-- 商品類別 -->
+    <div class="category">
+      <!-- 標題 -->
+      <h2 class="cateTitle">商品種類</h2>
+      <!-- 有哪些種類 -->
+      <div class="categoryItem">
+        <div class="row">
+          <div class="col-12 col-md-3 " v-for="category in categories" :key="category.title">
+            <div class="item">
+              <img :src="category.image" class="ImgItem d-block w-100" :alt="category.title">
+              <p>{{ category.title }}</p>
             </div>
           </div>
         </div>
-
-        <!-- 箭頭圖示 -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#TodayItem" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#TodayItem" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
     </div>
     
-    <!-- 降價跟熱賣商品 -->
-    <div class="markdownAndSellWell">
-      <!-- 降價商品幻燈片 -->
-      <div class="markdownItemImage col-12 col-md-6 col-lg-3">
-        <div id="markdownItem" class="carousel slide" data-bs-ride="carousel">
-      
-          <!-- 標頭 -->
-          <div class="commodityHeader">
-            <p>降價商品</p>
+    <!-- 各種商品幻燈片 -->
+    <div class="ItemImage d-flex flex-column flex-xl-row">
+      <!-- 今日商品幻燈片 -->
+      <div class="TodayItemImage">
+        <div id="TodayItem" class="carousel slide" data-bs-ride="carousel">
+
+          <!-- 圖片下方圖示 -->
+          <div class="carousel-indicators">
+            <button v-for="(item, index) in todayItems" :key="index" type="button" data-bs-target="#TodayItem"
+              :data-bs-slide-to="index" :class="{ active: index === 0 }" aria-current="index === 0"
+              :aria-label="'Slide ' + (index + 1)"></button>
           </div>
+        
           <!-- 商品內容 -->
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
+            <div class="carousel-item " :class="{ active: index === 0 }" v-for="(item, index) in todayItems" :key="index">
+              <img :src="item.image" class="ImgItem d-block w-100" :alt="'Slide ' + (index + 1)">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>{{ item.title }}</h5>
+                <p>{{ item.description }}</p>
               </div>
-            </div>
-            <div class="carousel-item">
-              <div class="row">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div>B
           </div>
+
           <!-- 箭頭圖示 -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#markdownItem" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#TodayItem" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#markdownItem" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#TodayItem" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
       </div>
       
-      <!-- 熱賣商品幻燈片 -->
-      <div class="sellWellItemImage col-12 col-md-6 col-lg-3">
-        <div id="sellWellItem" class="carousel slide" data-bs-ride="carousel">
-      
-          <!-- 標頭 -->
-          <div class="commodityHeader">
-            <p>熱銷商品</p>
-          </div>
-          <!-- 商品內容 -->
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
+      <!-- 降價跟熱賣商品 -->
+      <div class="markdownAndSellWell">
+        <!-- 降價商品幻燈片 -->
+        <div class="markdownItemImage col-12 col-md-6 col-lg-3">
+          <div id="markdownItem" class="carousel slide" data-bs-ride="carousel">
+        
+            <!-- 標頭 -->
+            <div class="commodityHeader">
+              <p>降價商品</p>
+            </div>
+            <!-- 商品內容 -->
+            <div class="carousel-inner">
+              <div class="carousel-item" v-for="(group, groupIndex) in markdownItems" :key="groupIndex" :class="{ active: groupIndex === 0 }">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-3" v-for="(item, itemIndex) in group" :key="itemIndex" >
+                    <div class="item-box">
+                      <div class="item-img">
+                        <img :src="item.image" class="downItemImage d-block w-100" alt="...">
+                      </div>
+                      <div class="item-text">
+                        <p>{{ item.title }}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="carousel-item">
+            <!-- 箭頭圖示 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#markdownItem" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#markdownItem" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- 熱賣商品幻燈片 -->
+        <div class="sellWellItemImage col-12 col-md-6 col-lg-3">
+          <div id="sellWellItem" class="carousel slide" data-bs-ride="carousel">
+        
+            <!-- 標頭 -->
+            <div class="commodityHeader">
+              <p>熱銷商品</p>
+            </div>
+            <!-- 商品內容 -->
+            <div class="carousel-inner">
+              <div class="carousel-item" v-for="(group, groupIndex) in sellWellItems" :key="groupIndex" :class="{ active: groupIndex === 0 }">
+                <div class="row">
+                  <div class="col-12 col-md-6 col-lg-3" v-for="(item, itemIndex) in group" :key="itemIndex">
+                    <div class="item-box">
+                      <div class="item-img">
+                        <img :src="item.image" class="downItemImage d-block w-100" alt="...">
+                      </div>
+                      <div class="item-text">
+                        <p>{{ item.title }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 箭頭圖示 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#sellWellItem" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#sellWellItem" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 喜愛商品跟大家喜愛商品 -->
+    <div class="favoriteAndEveFavorite">
+      <!-- 個人喜愛商品幻燈片 -->
+      <div class="favoriteItemImage col-12 col-md-6 col-lg-3">
+        <div id="favoriteItem" class="carousel slide" data-bs-ride="carousel">
+    
+          <!-- 標頭 -->
+          <div class="commodityHeader">
+            <p>你有可能會喜歡的商品</p>
+          </div>
+          <!-- 商品內容 -->
+          <div class="carousel-inner">
+            <div class="carousel-item" v-for="(group, groupIndex) in favoriteItems" :key="groupIndex" :class="{ active: groupIndex === 0 }">
               <div class="row">
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-12 col-md-6 col-lg-3" v-for="(item, itemIndex) in group" :key="itemIndex">
                   <div class="item-box">
                     <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
+                      <img :src="item.image" class="downItemImage d-block w-100" alt="...">
                     </div>
                     <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                  <div class="item-box">
-                    <div class="item-img">
-                      <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                    </div>
-                    <div class="item-text">
-                      <p>小熊餅乾特價</p>
+                      <p>{{ item.title }}</p>
                     </div>
                   </div>
                 </div>
@@ -429,11 +260,48 @@
             </div>
           </div>
           <!-- 箭頭圖示 -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#sellWellItem" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#favoriteItem" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#sellWellItem" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#favoriteItem" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    
+      <!-- 大家喜愛的商品幻燈片 -->
+      <div class="EveryoneFavorite_ItemImage col-12 col-md-6 col-lg-3">
+        <div id="EveryoneFavoriteItem" class="carousel slide" data-bs-ride="carousel">
+    
+          <!-- 標頭 -->
+          <div class="commodityHeader">
+            <p>大家通常在看甚麼商品</p>
+          </div>
+          <!-- 商品內容 -->
+          <div class="carousel-inner">
+            <div class="carousel-item" v-for="(group, groupIndex) in everyoneFavoriteItems" :key="groupIndex" :class="{ active: groupIndex === 0 }">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-3" v-for="(item, itemIndex) in group" :key="itemIndex">
+                  <div class="item-box">
+                    <div class="item-img">
+                      <img :src="item.image" class="downItemImage d-block w-100" alt="...">
+                    </div>
+                    <div class="item-text">
+                      <p>{{ item.title }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 箭頭圖示 -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#EveryoneFavoriteItem" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#EveryoneFavoriteItem" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
@@ -442,233 +310,104 @@
     </div>
   </div>
 
-  <!-- 喜愛商品跟大家喜愛商品 -->
-  <div class="favoriteAndEveFavorite">
-    <!-- 個人喜愛商品幻燈片 -->
-    <div class="favoriteItemImage col-12 col-md-6 col-lg-3">
-      <div id="favoriteItem" class="carousel slide" data-bs-ride="carousel">
-  
-        <!-- 標頭 -->
-        <div class="commodityHeader">
-          <p>你有可能會喜歡的商品</p>
-        </div>
-        <!-- 商品內容 -->
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 箭頭圖示 -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#favoriteItem" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#favoriteItem" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-  
-    <!-- 大家喜愛的商品幻燈片 -->
-    <div class="EveryoneFavorite_ItemImage col-12 col-md-6 col-lg-3">
-      <div id="EveryoneFavoriteItem" class="carousel slide" data-bs-ride="carousel">
-  
-        <!-- 標頭 -->
-        <div class="commodityHeader">
-          <p>大家通常在看甚麼商品</p>
-        </div>
-        <!-- 商品內容 -->
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="row">
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <div class="item-box">
-                  <div class="item-img">
-                    <img src="https://picsum.photos/300/200?random=107" class="downItemImage d-block w-100" alt="...">
-                  </div>
-                  <div class="item-text">
-                    <p>小熊餅乾特價</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 箭頭圖示 -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#EveryoneFavoriteItem" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#EveryoneFavoriteItem" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          // 導覽列(Navbar)
+          navLinks: [
+            { text: '首頁', href: '#', active: true },
+            { text: '各種商品', href: './commodity.html', active: false },
+            { text: '關於我們', href: '#', active: false },
+          ],
+          // 商品活動幻燈片
+          carouselItems:[
+            { image: 'https://picsum.photos/300/100?random=1', title: '餅乾類' },
+            { image: 'https://picsum.photos/300/100?random=2', title: '糖果類' },
+            { image: 'https://picsum.photos/300/100?random=3', title: '飲料類' },
+          ],
+          // 商品類別
+          categories: [
+            { image: 'https://picsum.photos/300/200?random=4', title: '餅乾類' },
+            { image: 'https://picsum.photos/300/200?random=5', title: '糖果類' },
+            { image: 'https://picsum.photos/300/200?random=6', title: '飲料類' },
+            { image: 'https://picsum.photos/300/200?random=7', title: '其他' },
+          ],
+          // 今日商品幻燈片
+          todayItems: [
+            { image: 'https://picsum.photos/300/200?random=8', title: '餅乾類', description: 'Some representative placeholder content for the first slide.' },
+            { image: 'https://picsum.photos/300/200?random=9', title: '糖果類', description: 'Some representative placeholder content for the second slide.' },
+            { image: 'https://picsum.photos/300/200?random=10', title: '飲料類', description: 'Some representative placeholder content for the third slide.' },
+          ],
+          // 降價商品數據
+          markdownItems: [
+            [
+              { image: 'https://picsum.photos/300/200?random=11', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=12', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=13', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=14', title: '英雄傳說' }
+            ],
+            [
+              { image: 'https://picsum.photos/300/200?random=15', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=16', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=17', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=18', title: '英雄傳說' }
+            ]
+          ],
+          // 熱銷商品數據
+          sellWellItems: [
+            [
+              { image: 'https://picsum.photos/300/200?random=19', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=20', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=21', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=22', title: '英雄傳說' }
+            ],
+            [
+              { image: 'https://picsum.photos/300/200?random=23', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=24', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=25', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=26', title: '英雄傳說' }
+            ]
+          ],
+          // 個人喜歡的商品數據
+          favoriteItems: [
+            [
+              { image: 'https://picsum.photos/300/200?random=27', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=28', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=29', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=30', title: '英雄傳說' }
+            ],
+            [
+              { image: 'https://picsum.photos/300/200?random=31', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=32', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=34', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=35', title: '英雄傳說' }
+            ]
+          ],
+          // 大家喜歡的商品數據
+          everyoneFavoriteItems: [
+            [
+              { image: 'https://picsum.photos/300/200?random=36', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=37', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=38', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=39', title: '英雄傳說' }
+            ],
+            [
+              { image: 'https://picsum.photos/300/200?random=40', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=41', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=42', title: '英雄傳說' },
+              { image: 'https://picsum.photos/300/200?random=43', title: '英雄傳說' }
+            ]
+          ]
+        };
+      }
+    }).mount('#app');
+  </script>
   <!-- Bootstrap JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
+
 </body>
+
 </html>
